@@ -39,65 +39,79 @@ public class entrega extends javax.swing.JFrame {
 
     public entrega() {
         initComponents();
-        cargarTabla();
-        actualizarFechas1();
-        btnNuevaCarga.setVisible(false);
-       jCalendar2.setBackground(Color.RED);
-        tableModel = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // Deshabilitar la edición de todas las celdas
-                return false;
+        Color customColor = new Color(249, 249, 249);
+
+        jCalendar2.setBackground(customColor);
+        jCalendar2.getDayChooser().getDayPanel().setBackground(customColor);
+        jCalendar2.getDayChooser().getDayPanel().setBorder(null);
+        jCalendar2.getMonthChooser().setBackground(customColor);
+        jCalendar2.getMonthChooser().setBorder(null);
+        jCalendar2.getYearChooser().setBackground(customColor);
+        jCalendar2.getYearChooser().setBorder(null);
+
+    
+
+                cargarTabla();
+                actualizarFechas1();
+                btnNuevaCarga.setVisible(false);
+                btnGuardar.setVisible(false);
+
+                tableModel = new DefaultTableModel() {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        // Deshabilitar la edición de todas las celdas
+                        return false;
+                    }
+                };
+                tableModel.addColumn("Nombre");
+                tableModel.addColumn("Apellido");
+                tableModel.addColumn("Legajo");
+                legajos = new ArrayList<>();
+                nombres = new ArrayList<>();
+                apellidos = new ArrayList<>();
+
+                try {
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement statement = con.prepareStatement("SELECT legajo,nombre,apellido FROM empleados ORDER BY nombre ASC, apellido ASC");
+                    ResultSet resultado = statement.executeQuery();
+                    while (resultado.next()) {
+                        String legajo = resultado.getString("legajo");
+                        String nombre = resultado.getString("nombre");
+                        String apellido = resultado.getString("apellido");
+
+                        Object[] fila = {nombre, apellido, legajo};
+                        tableModel.addRow(fila);
+                        legajos.add(legajo);
+                        nombres.add(nombre);
+                        apellidos.add(apellido);
+
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                StringBuilder sb = new StringBuilder();
+                for (String legajo : legajos) {
+                    sb.append(legajo).append("\n");
+                }
+                for (String nombre : nombres) {
+                    sb.append(nombre).append("\n");
+                }
+                for (String apellido : apellidos) {
+                    sb.append(apellido).append("\n");
+                }
+
+                jTable1.setModel(tableModel);
+                jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        jTable1MouseClicked(evt);
+                    }
+
+                });
+
             }
-        };
-        tableModel.addColumn("Nombre");
-        tableModel.addColumn("Apellido");
-        tableModel.addColumn("Legajo");
-        legajos = new ArrayList<>();
-        nombres = new ArrayList<>();
-        apellidos = new ArrayList<>();
 
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement statement = con.prepareStatement("SELECT legajo,nombre,apellido FROM empleados ORDER BY nombre ASC, apellido ASC");
-            ResultSet resultado = statement.executeQuery();
-            while (resultado.next()) {
-                String legajo = resultado.getString("legajo");
-                String nombre = resultado.getString("nombre");
-                String apellido = resultado.getString("apellido");
-
-                Object[] fila = {nombre, apellido, legajo};
-                tableModel.addRow(fila);
-                legajos.add(legajo);
-                nombres.add(nombre);
-                apellidos.add(apellido);
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (String legajo : legajos) {
-            sb.append(legajo).append("\n");
-        }
-        for (String nombre : nombres) {
-            sb.append(nombre).append("\n");
-        }
-        for (String apellido : apellidos) {
-            sb.append(apellido).append("\n");
-        }
-
-        jTable1.setModel(tableModel);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
-
-    }
-
-    @SuppressWarnings("unchecked")
+            @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -131,6 +145,8 @@ public class entrega extends javax.swing.JFrame {
         setBackground(new java.awt.Color(30, 144, 255));
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(1100, 650));
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(249, 249, 249));
@@ -140,11 +156,11 @@ public class entrega extends javax.swing.JFrame {
         txtLegajo.setBackground(new java.awt.Color(249, 249, 249));
         txtLegajo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtLegajo.setBorder(null);
-        jPanel1.add(txtLegajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 70, 30));
+        jPanel1.add(txtLegajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 70, 30));
 
         jLabel6.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         jLabel6.setText("Legajo:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 70, 24));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 70, 24));
 
         jPanel1OcultarTabla.setBackground(new java.awt.Color(249, 249, 249));
 
@@ -177,16 +193,17 @@ public class entrega extends javax.swing.JFrame {
         jPanel1OcultarTabla.setLayout(jPanel1OcultarTablaLayout);
         jPanel1OcultarTablaLayout.setHorizontalGroup(
             jPanel1OcultarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1OcultarTablaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1OcultarTablaLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1OcultarTablaLayout.setVerticalGroup(
             jPanel1OcultarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1OcultarTablaLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1OcultarTablaLayout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel1OcultarTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 400, -1));
@@ -226,12 +243,12 @@ public class entrega extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTable2);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 550, 330));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 44, 230, 10));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 550, 330));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 230, 10));
 
         jLabel1.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jLabel1.setText("ENTREGA DE PRODUCTOS");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 11, 240, 27));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 240, 27));
 
         txtBuscador.setBackground(new java.awt.Color(249, 249, 249));
         txtBuscador.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -245,7 +262,7 @@ public class entrega extends javax.swing.JFrame {
                 txtBuscadorKeyReleased(evt);
             }
         });
-        jPanel1.add(txtBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 214, 30));
+        jPanel1.add(txtBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 214, 30));
 
         bynImprimir.setBackground(new java.awt.Color(210, 228, 238));
         bynImprimir.setText("IMPRIMIR");
@@ -262,10 +279,10 @@ public class entrega extends javax.swing.JFrame {
                 bynImprimirActionPerformed(evt);
             }
         });
-        jPanel1.add(bynImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 470, 340, 30));
+        jPanel1.add(bynImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 490, 340, 30));
 
         lblLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lupa-removebg-preview (1).png"))); // NOI18N
-        jPanel1.add(lblLupa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 31, 31));
+        jPanel1.add(lblLupa, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 31, 31));
 
         btnNuevaCarga.setBackground(new java.awt.Color(210, 228, 238));
         btnNuevaCarga.setText("NUEVA CARGA");
@@ -280,7 +297,7 @@ public class entrega extends javax.swing.JFrame {
                 btnNuevaCargaActionPerformed(evt);
             }
         });
-        jPanel1.add(btnNuevaCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 568, 180, 30));
+        jPanel1.add(btnNuevaCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 610, 190, 40));
 
         btnGuardar.setBackground(new java.awt.Color(177, 197, 213));
         btnGuardar.setText("GUARDAR");
@@ -297,7 +314,7 @@ public class entrega extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 540, 90, 38));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 470, 370, 60));
 
         bynLimpiar.setBackground(new java.awt.Color(210, 228, 238));
         bynLimpiar.setText("LIMPIAR");
@@ -314,10 +331,10 @@ public class entrega extends javax.swing.JFrame {
                 bynLimpiarActionPerformed(evt);
             }
         });
-        jPanel1.add(bynLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 540, 90, 38));
+        jPanel1.add(bynLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 550, 160, 38));
 
         jLabel2.setText("           Firma del empleado");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 420, 170, 20));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 440, 170, 20));
 
         txtFecha.setBackground(new java.awt.Color(249, 249, 249));
         txtFecha.setBorder(null);
@@ -326,11 +343,11 @@ public class entrega extends javax.swing.JFrame {
                 txtFechaActionPerformed(evt);
             }
         });
-        jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, 130, 30));
+        jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, 130, 30));
 
         jLabel3.setText("Fecha de entrega :");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 120, 110, 30));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 410, 220, 10));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, 110, 30));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, 220, 10));
 
         jCalendar2.setBackground(new java.awt.Color(249, 249, 249));
         jCalendar2.setBorder(new javax.swing.border.MatteBorder(null));
@@ -342,7 +359,7 @@ public class entrega extends javax.swing.JFrame {
                 jCalendar2PropertyChange(evt);
             }
         });
-        jPanel1.add(jCalendar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 170, 370, 220));
+        jPanel1.add(jCalendar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 200, 340, 220));
 
         bynVolver2.setBackground(new java.awt.Color(210, 228, 238));
         bynVolver2.setText("VOLVER");
@@ -360,16 +377,16 @@ public class entrega extends javax.swing.JFrame {
                 bynVolver2ActionPerformed(evt);
             }
         });
-        jPanel1.add(bynVolver2, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 540, 90, 38));
+        jPanel1.add(bynVolver2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 550, 150, 38));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mateo-logo-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, 430, 110));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, 430, 110));
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel5.setText("BATERIAS");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 494, 140, 20));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 520, 140, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 650));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -409,7 +426,7 @@ public class entrega extends javax.swing.JFrame {
         jPanel1OcultarTabla.setVisible(true);
         jCalendar2.setVisible(true);
         bynImprimir.setVisible(true);
-        btnGuardar.setVisible(true);
+        btnGuardar.setVisible(false);
         bynVolver2.setVisible(true);
         bynLimpiar.setVisible(true);
         btnNuevaCarga.setVisible(false);
@@ -585,7 +602,7 @@ public class entrega extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnGuardarActionPerformed
-    }
+        }
     private void bynLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bynLimpiarActionPerformed
         Limpiar();
         jPanel1OcultarTabla.setVisible(true);
@@ -600,12 +617,13 @@ public class entrega extends javax.swing.JFrame {
         jCalendar2.setVisible(false);
         bynImprimir.setVisible(false);
         btnGuardar.setVisible(false);
-        bynVolver2.setVisible(false);
+        bynVolver2.setVisible(true);
         bynLimpiar.setVisible(false);
         btnNuevaCarga.setVisible(true);
         guardarValoresMarcados();
         cargarTabla();
         printer.imprimir();
+        btnGuardar.setVisible(true);
     }//GEN-LAST:event_bynImprimirActionPerformed
 
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
@@ -644,7 +662,7 @@ public class entrega extends javax.swing.JFrame {
     }//GEN-LAST:event_bynVolver2ActionPerformed
 
     private void bynLimpiarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bynLimpiarMouseEntered
-     bynLimpiar.setBackground(new Color(177, 197, 213));
+        bynLimpiar.setBackground(new Color(177, 197, 213));
     }//GEN-LAST:event_bynLimpiarMouseEntered
 
     private void bynVolver2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bynVolver2MouseEntered
@@ -652,11 +670,11 @@ public class entrega extends javax.swing.JFrame {
     }//GEN-LAST:event_bynVolver2MouseEntered
 
     private void btnNuevaCargaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevaCargaMouseEntered
-       btnNuevaCarga.setBackground(new Color(177, 197, 213));
+        btnNuevaCarga.setBackground(new Color(177, 197, 213));
     }//GEN-LAST:event_btnNuevaCargaMouseEntered
 
     private void bynLimpiarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bynLimpiarMouseExited
-          bynLimpiar.setBackground(new Color(210, 228, 238));
+        bynLimpiar.setBackground(new Color(210, 228, 238));
     }//GEN-LAST:event_bynLimpiarMouseExited
 
     private void bynVolver2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bynVolver2MouseExited
@@ -664,202 +682,202 @@ public class entrega extends javax.swing.JFrame {
     }//GEN-LAST:event_bynVolver2MouseExited
 
     private void bynImprimirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bynImprimirMouseExited
-       bynImprimir.setBackground(new Color(210, 228, 238));
+        bynImprimir.setBackground(new Color(210, 228, 238));
     }//GEN-LAST:event_bynImprimirMouseExited
 
     private void bynImprimirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bynImprimirMouseEntered
         bynImprimir.setBackground(new Color(177, 197, 213));
     }//GEN-LAST:event_bynImprimirMouseEntered
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        /**
+         * @param args the command line arguments
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new entrega().setVisible(true);
-
-            }
-        });
-    }
-    private javax.swing.JScrollPane jScrollPaneCargaProducto;
-    private boolean mostrarStock = true;
-    private Map<Integer, Boolean> valoresMarcados = new HashMap<>();
-
-    private void cargarTabla() {
-        DefaultTableModel modeloTabla = new DefaultTableModel(new Object[][]{}, new String[]{"PRODUCTO", "STOCK", "A ENTREGAR"}) {
-            Class[] columnTypes = new Class[]{String.class, Integer.class, Boolean.class};
-            boolean[] columnEditable = new boolean[]{false, false, true};
-
-            public Class getColumnClass(int columnIndex) {
-                return columnTypes[columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnEditable[columnIndex];
-            }
-        };
-
-        modeloTabla.setRowCount(0);
-
-        PreparedStatement ps;
-        ResultSet rs;
-        ResultSetMetaData rsmd;
-        int columnas;
-        int[] anchos = {150, 100, 50}; // Ajusta el ancho de la columna "ENTREGADO"
-        for (int i = 0; i < jTable2.getColumnCount(); i++) {
-            jTable2.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-        }
-
-        try {
-            Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT  nombre_producto, stock FROM productos");
-            rs = ps.executeQuery();
-            rsmd = rs.getMetaData();
-            columnas = rsmd.getColumnCount();
-
-            while (rs.next()) {
-                Object[] fila = new Object[columnas];
-                for (int indice = 0; indice < columnas; indice++) {
-                    fila[indice] = rs.getObject(indice + 1);
-                }
-                modeloTabla.addRow(fila);
-            }
-
-            // Convertir los valores a mayúsculas
-            for (int fila = 0; fila < modeloTabla.getRowCount(); fila++) {
-                for (int columna = 0; columna < modeloTabla.getColumnCount(); columna++) {
-                    Object valor = modeloTabla.getValueAt(fila, columna);
-                    if (valor instanceof String) {
-                        modeloTabla.setValueAt(((String) valor).toUpperCase(), fila, columna);
+        public static void main(String args[]) {
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+             */
+            try {
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
                     }
                 }
+            } catch (ClassNotFoundException ex) {
+                java.util.logging.Logger.getLogger(entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                java.util.logging.Logger.getLogger(entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                java.util.logging.Logger.getLogger(entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(entrega.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-            // Establecer los valores iniciales del CheckBox en false
-            for (int fila = 0; fila < modeloTabla.getRowCount(); fila++) {
-                modeloTabla.setValueAt(false, fila, 2); // 2 es el índice de la columna "ENTREGADO"
-            }
+            //</editor-fold>
 
-            // Asignar el modelo de tabla al jTable2
-            jTable2.setModel(modeloTabla);
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new entrega().setVisible(true);
 
-            // Alinear la columna "PRODUCTO" a la izquierda
-            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-            renderer.setHorizontalAlignment(SwingConstants.LEFT);
-            jTable2.getColumnModel().getColumn(0).setCellRenderer(renderer);
+                }
+            });
+        }
+        private javax.swing.JScrollPane jScrollPaneCargaProducto;
+        private boolean mostrarStock = true;
+        private Map<Integer, Boolean> valoresMarcados = new HashMap<>();
 
-            // Alinear la columna "STOCK" a la izquierda
-            DefaultTableCellRenderer rendererStock = new DefaultTableCellRenderer();
-            rendererStock.setHorizontalAlignment(SwingConstants.LEFT);
-            jTable2.getColumnModel().getColumn(1).setCellRenderer(rendererStock);
-            int margin = 5;
-            jTable2.setBorder(BorderFactory.createEmptyBorder(margin, margin, margin, margin));
+        private void cargarTabla() {
+            DefaultTableModel modeloTabla = new DefaultTableModel(new Object[][]{}, new String[]{"PRODUCTO", "STOCK", "A ENTREGAR"}) {
+                Class[] columnTypes = new Class[]{String.class, Integer.class, Boolean.class};
+                boolean[] columnEditable = new boolean[]{false, false, true};
 
-            DefaultTableCellRenderer rendererEntregado = new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    JCheckBox checkBox = new JCheckBox();
-                    checkBox.setSelected((Boolean) value);
-                    checkBox.setHorizontalAlignment(SwingConstants.LEFT);
+                public Class getColumnClass(int columnIndex) {
+                    return columnTypes[columnIndex];
+                }
 
-                    // Agregar un margen de 5 píxeles a todos los lados del JCheckBox
-                    int margin = 5;
-                    checkBox.setBorder(BorderFactory.createEmptyBorder(margin, margin, margin, margin));
-
-                    return checkBox;
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return columnEditable[columnIndex];
                 }
             };
 
-            jTable2.getColumnModel().getColumn(2).setCellRenderer(rendererEntregado);
+            modeloTabla.setRowCount(0);
 
-            // Ajustar el ancho de la columna "ENTREGADO"
-            TableColumn columnEntregado = jTable2.getColumnModel().getColumn(2);
-            columnEntregado.setPreferredWidth(50); // Ajusta el ancho de la columna "ENTREGADO" a la mitad
+            PreparedStatement ps;
+            ResultSet rs;
+            ResultSetMetaData rsmd;
+            int columnas;
+            int[] anchos = {150, 100, 50}; // Ajusta el ancho de la columna "ENTREGADO"
+            for (int i = 0; i < jTable2.getColumnCount(); i++) {
+                jTable2.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+            }
 
-            // Habilitar la selección del checkbox con un clic izquierdo
-            jTable2.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    int column = jTable2.getColumnModel().getColumnIndexAtX(e.getX());
-                    int row = e.getY() / jTable2.getRowHeight();
+            try {
+                Connection con = Conexion.getConexion();
+                ps = con.prepareStatement("SELECT  nombre_producto, stock FROM productos");
+                rs = ps.executeQuery();
+                rsmd = rs.getMetaData();
+                columnas = rsmd.getColumnCount();
 
-                    if (row < jTable2.getRowCount() && row >= 0 && column < jTable2.getColumnCount() && column >= 0) {
-                        if (jTable2.getValueAt(row, column) instanceof Boolean) {
-                            jTable2.setValueAt(!(Boolean) jTable2.getValueAt(row, column), row, column);
+                while (rs.next()) {
+                    Object[] fila = new Object[columnas];
+                    for (int indice = 0; indice < columnas; indice++) {
+                        fila[indice] = rs.getObject(indice + 1);
+                    }
+                    modeloTabla.addRow(fila);
+                }
+
+                // Convertir los valores a mayúsculas
+                for (int fila = 0; fila < modeloTabla.getRowCount(); fila++) {
+                    for (int columna = 0; columna < modeloTabla.getColumnCount(); columna++) {
+                        Object valor = modeloTabla.getValueAt(fila, columna);
+                        if (valor instanceof String) {
+                            modeloTabla.setValueAt(((String) valor).toUpperCase(), fila, columna);
                         }
                     }
                 }
-            });
+                // Establecer los valores iniciales del CheckBox en false
+                for (int fila = 0; fila < modeloTabla.getRowCount(); fila++) {
+                    modeloTabla.setValueAt(false, fila, 2); // 2 es el índice de la columna "ENTREGADO"
+                }
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+                // Asignar el modelo de tabla al jTable2
+                jTable2.setModel(modeloTabla);
+
+                // Alinear la columna "PRODUCTO" a la izquierda
+                DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+                renderer.setHorizontalAlignment(SwingConstants.LEFT);
+                jTable2.getColumnModel().getColumn(0).setCellRenderer(renderer);
+
+                // Alinear la columna "STOCK" a la izquierda
+                DefaultTableCellRenderer rendererStock = new DefaultTableCellRenderer();
+                rendererStock.setHorizontalAlignment(SwingConstants.LEFT);
+                jTable2.getColumnModel().getColumn(1).setCellRenderer(rendererStock);
+                int margin = 5;
+                jTable2.setBorder(BorderFactory.createEmptyBorder(margin, margin, margin, margin));
+
+                DefaultTableCellRenderer rendererEntregado = new DefaultTableCellRenderer() {
+                    @Override
+                    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                        JCheckBox checkBox = new JCheckBox();
+                        checkBox.setSelected((Boolean) value);
+                        checkBox.setHorizontalAlignment(SwingConstants.LEFT);
+
+                        // Agregar un margen de 5 píxeles a todos los lados del JCheckBox
+                        int margin = 5;
+                        checkBox.setBorder(BorderFactory.createEmptyBorder(margin, margin, margin, margin));
+
+                        return checkBox;
+                    }
+                };
+
+                jTable2.getColumnModel().getColumn(2).setCellRenderer(rendererEntregado);
+
+                // Ajustar el ancho de la columna "ENTREGADO"
+                TableColumn columnEntregado = jTable2.getColumnModel().getColumn(2);
+                columnEntregado.setPreferredWidth(50); // Ajusta el ancho de la columna "ENTREGADO" a la mitad
+
+                // Habilitar la selección del checkbox con un clic izquierdo
+                jTable2.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        int column = jTable2.getColumnModel().getColumnIndexAtX(e.getX());
+                        int row = e.getY() / jTable2.getRowHeight();
+
+                        if (row < jTable2.getRowCount() && row >= 0 && column < jTable2.getColumnCount() && column >= 0) {
+                            if (jTable2.getValueAt(row, column) instanceof Boolean) {
+                                jTable2.setValueAt(!(Boolean) jTable2.getValueAt(row, column), row, column);
+                            }
+                        }
+                    }
+                });
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+            restaurarValoresMarcados();
         }
-        restaurarValoresMarcados();
-    }
 
-    private void actualizarFechas1() {
-        java.util.Date fechaActual = new java.util.Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        private void actualizarFechas1() {
+            java.util.Date fechaActual = new java.util.Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-        // Obtener la fecha seleccionada en jCalendarEntrada
-        java.util.Date fechaEntrada = jCalendar2.getDate();
-        String fechaEntradaStr = sdf.format(fechaEntrada);
-        txtFecha.setText(fechaEntradaStr);
-    }
-
-    public void establecerFechaActualEnCampoTexto() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        Date fechaActual = new Date();
-        String fechaActualStr = sdf.format(fechaActual);
-        txtFecha.setText(fechaActualStr);
-    }
-
-    private void Limpiar() {
-        txtBuscador.setText("");
-        txtLegajo.setText("");
-        txtFecha.setText("");
-        establecerFechaActualEnCampoTexto();
-        cargarTabla();
-    }
-
-    private void guardarValoresMarcados() {
-        valoresMarcados.clear();
-        for (int fila = 0; fila < jTable2.getRowCount(); fila++) {
-            boolean marcado = (boolean) jTable2.getValueAt(fila, 2); // 2 es el índice de la columna "A ENTREGAR"
-            valoresMarcados.put(fila, marcado);
+            // Obtener la fecha seleccionada en jCalendarEntrada
+            java.util.Date fechaEntrada = jCalendar2.getDate();
+            String fechaEntradaStr = sdf.format(fechaEntrada);
+            txtFecha.setText(fechaEntradaStr);
         }
-    }
 
-    private void restaurarValoresMarcados() {
-        for (int fila = 0; fila < jTable2.getRowCount(); fila++) {
-            boolean marcado = valoresMarcados.getOrDefault(fila, false);
-            jTable2.setValueAt(marcado, fila, 2); // 2 es el índice de la columna "A ENTREGAR"
+        public void establecerFechaActualEnCampoTexto() {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date fechaActual = new Date();
+            String fechaActualStr = sdf.format(fechaActual);
+            txtFecha.setText(fechaActualStr);
         }
-    }
+
+        private void Limpiar() {
+            txtBuscador.setText("");
+            txtLegajo.setText("");
+            txtFecha.setText("");
+            establecerFechaActualEnCampoTexto();
+            cargarTabla();
+        }
+
+        private void guardarValoresMarcados() {
+            valoresMarcados.clear();
+            for (int fila = 0; fila < jTable2.getRowCount(); fila++) {
+                boolean marcado = (boolean) jTable2.getValueAt(fila, 2); // 2 es el índice de la columna "A ENTREGAR"
+                valoresMarcados.put(fila, marcado);
+            }
+        }
+
+        private void restaurarValoresMarcados() {
+            for (int fila = 0; fila < jTable2.getRowCount(); fila++) {
+                boolean marcado = valoresMarcados.getOrDefault(fila, false);
+                jTable2.setValueAt(marcado, fila, 2); // 2 es el índice de la columna "A ENTREGAR"
+            }
+        }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevaCarga;

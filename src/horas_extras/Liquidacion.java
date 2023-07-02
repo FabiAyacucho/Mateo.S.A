@@ -186,13 +186,24 @@ public class Liquidacion extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtfILTRO = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txtPagar1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(30, 144, 255));
+        setLocationByPlatform(true);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txtBusqueda.setBackground(new java.awt.Color(249, 249, 249));
+        txtBusqueda.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBusquedaActionPerformed(evt);
@@ -205,6 +216,8 @@ public class Liquidacion extends javax.swing.JFrame {
         });
         getContentPane().add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 320, 30));
 
+        jTableLiq.setBackground(new java.awt.Color(249, 249, 249));
+        jTableLiq.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTableLiq.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -220,13 +233,16 @@ public class Liquidacion extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 321, 210));
 
+        txtTotal.setBackground(new java.awt.Color(249, 249, 249));
+        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalActionPerformed(evt);
             }
         });
-        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 140, -1));
+        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 160, 30));
 
+        bynImprimir.setBackground(new java.awt.Color(177, 197, 213));
         bynImprimir.setText("IMPRIMIR");
         bynImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,10 +251,11 @@ public class Liquidacion extends javax.swing.JFrame {
         });
         getContentPane().add(bynImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 160, 100, 50));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("TOTAL A PAGAR  $ :");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 150, 40));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 130, 50));
 
+        BTNdETALLE.setBackground(new java.awt.Color(177, 197, 213));
         BTNdETALLE.setText("VER DETALLE");
         BTNdETALLE.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -252,6 +269,7 @@ public class Liquidacion extends javax.swing.JFrame {
         });
         getContentPane().add(BTNdETALLE, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 140, -1));
 
+        txtLimpiar.setBackground(new java.awt.Color(177, 197, 213));
         txtLimpiar.setText("LIMPIAR");
         txtLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,6 +278,7 @@ public class Liquidacion extends javax.swing.JFrame {
         });
         getContentPane().add(txtLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 250, 110, 50));
 
+        btnVolver.setBackground(new java.awt.Color(177, 197, 213));
         btnVolver.setText("VOLVER");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,10 +287,11 @@ public class Liquidacion extends javax.swing.JFrame {
         });
         getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 250, 110, 50));
 
-        jLabel4.setFont(new java.awt.Font("Rockwell Extra Bold", 3, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Detalle de horas Extras");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 450, 38));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 450, 40));
 
+        txtfILTRO.setBackground(new java.awt.Color(177, 197, 213));
         txtfILTRO.setText("FILTRAR POR FECHA/SECTOR/FERIADO");
         txtfILTRO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,16 +299,44 @@ public class Liquidacion extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtfILTRO, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 340, 330, 40));
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 440));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 52, 320, 10));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 52, 200, 10));
 
+        txtPagar1.setBackground(new java.awt.Color(177, 197, 213));
         txtPagar1.setText("PAGAR");
+        txtPagar1.setToolTipText("");
         txtPagar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPagar1ActionPerformed(evt);
             }
         });
         getContentPane().add(txtPagar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 120, 50));
+
+        jPanel1.setBackground(new java.awt.Color(249, 249, 249));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel6.setText("BATERIAS");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, 140, 20));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mateo-logo-removebg-preview.png"))); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, 430, 90));
+
+        jPanel2.setBackground(new java.awt.Color(249, 249, 249));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel7.setText("BATERIAS");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, 140, 20));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mateo-logo-removebg-preview.png"))); // NOI18N
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, 430, 90));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/BATERIA-MATEO-removebg-preview.png"))); // NOI18N
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 230, 130));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 550));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -525,8 +573,14 @@ public class Liquidacion extends javax.swing.JFrame {
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton bynImprimir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableLiq;

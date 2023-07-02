@@ -2,7 +2,10 @@ package horas_extras;
 
 import APP.Conexion;
 import inicio.inicio;
+import java.awt.Color;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.ButtonGroup;
@@ -12,7 +15,6 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -34,8 +36,19 @@ public class horas_extras extends javax.swing.JFrame {
      */
     public horas_extras() {
         initComponents();
-        // Crea un modelo de fecha
+     
+       
+        Color customColor = new Color(249, 249, 249);
 
+        jCalendar1.setBackground(customColor);
+        jCalendar1.getDayChooser().getDayPanel().setBackground(customColor);
+        jCalendar1.getDayChooser().getDayPanel().setBorder(null);
+        jCalendar1.getMonthChooser().setBackground(customColor);
+        jCalendar1.getMonthChooser().setBorder(null);
+        jCalendar1.getYearChooser().setBackground(customColor);
+        jCalendar1.getYearChooser().setBorder(null);
+
+        actualizarFechas();
         tableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -89,10 +102,10 @@ public class horas_extras extends javax.swing.JFrame {
             }
         });
         ButtonGroup btnGr = new ButtonGroup();
-     
+
         btnGr.add(rbnSi);
         btnGr.add(rbtNo);
-        
+
         rbtNo.setSelected(true);
 
     }
@@ -106,11 +119,6 @@ public class horas_extras extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        txtFondo = new javax.swing.JLabel();
         txtId = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -119,82 +127,156 @@ public class horas_extras extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        lblLupa = new javax.swing.JLabel();
-        txtBuscador = new javax.swing.JTextField();
         cbxCantidad = new javax.swing.JComboBox<>();
         txtFecha = new javax.swing.JTextField();
         cbxMotivo = new javax.swing.JComboBox<>();
         cbxFin = new javax.swing.JComboBox<>();
         rbnSi = new javax.swing.JRadioButton();
         rbtNo = new javax.swing.JRadioButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         cbxInicio = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         cbxValor = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
         jCalendar1 = new com.toedter.calendar.JCalendar();
+        txtBuscador = new javax.swing.JTextField();
+        lblLupa = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtLegajo = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnCancelar1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("HORAS EXTRAS");
+        setBackground(new java.awt.Color(30, 144, 255));
+        setLocationByPlatform(true);
+        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/BATERIA-MATEO-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, 230, 170));
-
-        jLabel2.setFont(new java.awt.Font("Rockwell Extra Bold", 1, 16)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("BATERIAS");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 130, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mateo-logo-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 410, 130));
-
-        txtFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/horas_e.png"))); // NOI18N
-        jPanel1.add(txtFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 580, 680));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(513, 0, 590, 670));
-
+        txtId.setBackground(new java.awt.Color(249, 249, 249));
         txtId.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("Rockwell Extra Bold", 3, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Carga de horas Extras");
-        txtId.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, -10, 450, 38));
+        txtId.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 190, 50));
 
-        jLabel5.setFont(new java.awt.Font("Rockwell Extra Bold", 2, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Cantidad de Horas:");
-        txtId.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 362, -1, -1));
+        txtId.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
 
-        jLabel7.setFont(new java.awt.Font("Rockwell Extra Bold", 2, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Fecha:");
-        txtId.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 60, -1));
+        txtId.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 60, -1));
 
-        jLabel8.setFont(new java.awt.Font("Rockwell Extra Bold", 2, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Motivo:");
-        txtId.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 127, -1));
+        txtId.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 127, -1));
 
-        jLabel9.setFont(new java.awt.Font("Rockwell Extra Bold", 2, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Hora de Inicio:");
-        txtId.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
+        txtId.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
 
-        jLabel10.setFont(new java.awt.Font("Rockwell Extra Bold", 2, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Hora de Fin:");
-        txtId.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 156, -1));
+        txtId.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 156, -1));
 
-        jLabel11.setFont(new java.awt.Font("Rockwell Extra Bold", 2, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Feriado/Domingo:");
-        txtId.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 561, -1, -1));
+        txtId.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, -1, -1));
 
-        lblLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lupa-removebg-preview (1).png"))); // NOI18N
-        txtId.add(lblLupa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 31, 31));
+        cbxCantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbxCantidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        txtId.add(cbxCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 280, -1));
 
+        txtFecha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtFecha.setMargin(new java.awt.Insets(4, 4, 4, 4));
+        txtFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaActionPerformed(evt);
+            }
+        });
+        txtId.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 90, 30));
+
+        cbxMotivo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbxMotivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "Motivo1", "Motivo2", "Motivo3", "Motivo4" }));
+        cbxMotivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxMotivoActionPerformed(evt);
+            }
+        });
+        txtId.add(cbxMotivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 280, -1));
+
+        cbxFin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbxFin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "00.00", "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00" }));
+        cbxFin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxFinActionPerformed(evt);
+            }
+        });
+        txtId.add(cbxFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 280, -1));
+
+        rbnSi.setBackground(new java.awt.Color(249, 249, 249));
+        rbnSi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rbnSi.setText("SI");
+        rbnSi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbnSiActionPerformed(evt);
+            }
+        });
+        txtId.add(rbnSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 500, 86, -1));
+
+        rbtNo.setBackground(new java.awt.Color(249, 249, 249));
+        rbtNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rbtNo.setText("NO");
+        rbtNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtNoActionPerformed(evt);
+            }
+        });
+        txtId.add(rbtNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 500, 83, 22));
+
+        cbxInicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbxInicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "00.00", "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00" }));
+        txtId.add(cbxInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, 280, -1));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel12.setText("Valor de la hora:");
+        txtId.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 156, -1));
+
+        cbxValor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbxValor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "50", "100", "150", "200", "250", "300" }));
+        cbxValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxValorActionPerformed(evt);
+            }
+        });
+        txtId.add(cbxValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, 280, -1));
+
+        jSeparator1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        txtId.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 180, 10));
+
+        jCalendar1.setBackground(new java.awt.Color(249, 249, 249));
+        jCalendar1.setBorder(new javax.swing.border.MatteBorder(null));
+        jCalendar1.setForeground(new java.awt.Color(0, 86, 145));
+        jCalendar1.setToolTipText("");
+        jCalendar1.setWeekOfYearVisible(false);
+        jCalendar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendar1PropertyChange(evt);
+            }
+        });
+        txtId.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 340, 220));
+
+        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 570));
+
+        txtBuscador.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtBuscador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscadorActionPerformed(evt);
@@ -205,50 +287,21 @@ public class horas_extras extends javax.swing.JFrame {
                 txtBuscadorKeyReleased(evt);
             }
         });
-        txtId.add(txtBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 214, 30));
+        getContentPane().add(txtBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 214, 30));
 
-        cbxCantidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        txtId.add(cbxCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 362, 280, -1));
+        lblLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lupa-removebg-preview (1).png"))); // NOI18N
+        getContentPane().add(lblLupa, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 31, 31));
 
-        txtFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaActionPerformed(evt);
-            }
-        });
-        txtId.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 90, 30));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("Legajo:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 80, 50, 24));
 
-        cbxMotivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "Motivo1", "Motivo2", "Motivo3", "Motivo4" }));
-        cbxMotivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxMotivoActionPerformed(evt);
-            }
-        });
-        txtId.add(cbxMotivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 402, 280, -1));
+        txtLegajo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        getContentPane().add(txtLegajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 80, 71, 31));
 
-        cbxFin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "00.00", "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00" }));
-        cbxFin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxFinActionPerformed(evt);
-            }
-        });
-        txtId.add(cbxFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 482, 280, -1));
+        jScrollPane1.setBackground(new java.awt.Color(249, 240, 240));
 
-        rbnSi.setText("SI");
-        rbnSi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbnSiActionPerformed(evt);
-            }
-        });
-        txtId.add(rbnSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 560, 86, -1));
-
-        rbtNo.setText("NO");
-        rbtNo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtNoActionPerformed(evt);
-            }
-        });
-        txtId.add(rbtNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 560, 83, 22));
-
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -267,70 +320,68 @@ public class horas_extras extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        txtId.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 470, 118));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 470, 118));
 
-        cbxInicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "00.00", "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00" }));
-        txtId.add(cbxInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 442, 280, -1));
-
-        jLabel12.setFont(new java.awt.Font("Rockwell Extra Bold", 2, 14)); // NOI18N
-        jLabel12.setText("Valor de la hora:");
-        txtId.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 156, -1));
-
-        cbxValor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "50", "100", "150", "200", "250", "300" }));
-        cbxValor.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar1.setBackground(new java.awt.Color(177, 197, 213));
+        btnCancelar1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnCancelar1.setText("IMPRIMIR");
+        btnCancelar1.setBorder(null);
+        btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxValorActionPerformed(evt);
+                btnCancelar1ActionPerformed(evt);
             }
         });
-        txtId.add(cbxValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 522, 280, -1));
+        getContentPane().add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 500, 100, 40));
 
-        jCalendar1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCalendar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jCalendar1PropertyChange(evt);
-            }
-        });
-        txtId.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 370, 136));
+        jPanel2.setBackground(new java.awt.Color(249, 249, 249));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setFont(new java.awt.Font("Rockwell Extra Bold", 2, 14)); // NOI18N
-        jLabel6.setText("Legajo:");
-        txtId.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 76, 24));
-        txtId.add(txtLegajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, 71, 31));
-
-        btnCancelar.setFont(new java.awt.Font("Rockwell Extra Bold", 0, 14)); // NOI18N
+        btnCancelar.setBackground(new java.awt.Color(177, 197, 213));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCancelar.setText("VOLVER");
-        btnCancelar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        btnCancelar.setBorder(null);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-        txtId.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 599, 100, 60));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, 100, 40));
 
-        btnLimpiar.setFont(new java.awt.Font("Rockwell Extra Bold", 0, 14)); // NOI18N
+        btnLimpiar.setBackground(new java.awt.Color(177, 197, 213));
+        btnLimpiar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnLimpiar.setText("LIMPIAR");
-        btnLimpiar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        btnLimpiar.setBorder(null);
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        txtId.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 599, 100, 60));
+        jPanel2.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 430, 100, 40));
 
-        btnGuardar.setFont(new java.awt.Font("Rockwell Extra Bold", 0, 14)); // NOI18N
+        btnGuardar.setBackground(new java.awt.Color(177, 197, 213));
+        btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnGuardar.setText("GUARDAR");
-        btnGuardar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        btnGuardar.setBorder(null);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
-        txtId.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 599, 90, 60));
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyTyped(evt);
+            }
+        });
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 90, 40));
 
-        jSeparator1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        txtId.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 310, 10));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mateo-logo-removebg-preview.png"))); // NOI18N
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 430, 90));
 
-        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 10, 510, 670));
+        jLabel13.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel13.setText("BATERIAS");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 140, 20));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 500, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -356,47 +407,7 @@ public class horas_extras extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscadorKeyReleased
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
-        if (!Validar()) {
-            return;
-        }
-        String nombre = txtBuscador.getText();
-        int cantidad = Integer.parseInt((String) cbxCantidad.getSelectedItem());
-        String fecha = txtFecha.getText();
-        String motivo = (String) cbxMotivo.getSelectedItem();
-        String horaInicio = (String) cbxInicio.getSelectedItem();
-        String horaFinal = (String) cbxFin.getSelectedItem();
-        int valor = Integer.parseInt((String) cbxValor.getSelectedItem());
-        String legajo = txtLegajo.getText();
-        String feriado;
-
-        if (rbnSi.isSelected()) {
-            feriado = "SI";
-        } else if (rbtNo.isSelected()) {
-            feriado = "NO";
-        } else {
-            feriado = "NO";
-        }
-
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO hora_extra (nombre_empleado,cantidad_hora,fecha,motivo,hora_inicio,hora_fin,valor,feriado_domingo,legajo) VALUES (?,?,?,?,?,?,?,?,?)");
-            ps.setString(1, nombre);
-            ps.setInt(2, cantidad);
-            ps.setString(3, fecha);
-            ps.setString(4, motivo);
-            ps.setString(5, horaInicio);
-            ps.setString(6, horaFinal);
-            ps.setInt(7, valor);
-            ps.setString(8, feriado);
-            ps.setString(9, legajo);
-
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro guardado");
-            limpiar();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
+        GuardarDatos();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -436,13 +447,6 @@ public class horas_extras extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtNoActionPerformed
 
-    private void jCalendar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar1PropertyChange
-        if (evt.getOldValue() != null) {
-            SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-            txtFecha.setText(fecha.format(jCalendar1.getCalendar().getTime()));
-        }
-    }//GEN-LAST:event_jCalendar1PropertyChange
-
     private void txtBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscadorActionPerformed
@@ -450,6 +454,20 @@ public class horas_extras extends javax.swing.JFrame {
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaActionPerformed
+
+    private void jCalendar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar1PropertyChange
+        if ("calendar".equals(evt.getPropertyName())) {
+            actualizarFechas1();
+        }
+    }//GEN-LAST:event_jCalendar1PropertyChange
+
+    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+             
+    }//GEN-LAST:event_btnCancelar1ActionPerformed
+
+    private void btnGuardarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyTyped
+      GuardarDatos();
+    }//GEN-LAST:event_btnGuardarKeyTyped
 
     private void limpiar() {
         txtBuscador.setText("");
@@ -545,8 +563,72 @@ public class horas_extras extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
+    private void actualizarFechas1() {
+        java.util.Date fechaActual = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        // Obtener la fecha seleccionada en jCalendarEntrada
+        java.util.Date fechaEntrada = jCalendar1.getDate();
+        String fechaEntradaStr = sdf.format(fechaEntrada);
+        txtFecha.setText(fechaEntradaStr);
+    }
+
+    private void actualizarFechas() {
+        java.util.Date fechaActual = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        // Obtener la fecha seleccionada en jCalendarEntrada
+        java.util.Date fechaEntrada = jCalendar1.getDate();
+        String fechaEntradaStr = sdf.format(fechaEntrada);
+        txtFecha.setText(fechaEntradaStr);
+    }
+    private void GuardarDatos() {                                           
+
+        if (!Validar()) {
+            return;
+        }
+        String nombre = txtBuscador.getText();
+        int cantidad = Integer.parseInt((String) cbxCantidad.getSelectedItem());
+        String fecha = txtFecha.getText();
+        String motivo = (String) cbxMotivo.getSelectedItem();
+        String horaInicio = (String) cbxInicio.getSelectedItem();
+        String horaFinal = (String) cbxFin.getSelectedItem();
+        int valor = Integer.parseInt((String) cbxValor.getSelectedItem());
+        String legajo = txtLegajo.getText();
+        String feriado;
+
+        if (rbnSi.isSelected()) {
+            feriado = "SI";
+        } else if (rbtNo.isSelected()) {
+            feriado = "NO";
+        } else {
+            feriado = "NO";
+        }
+
+        try {
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO hora_extra (nombre_empleado,cantidad_hora,fecha,motivo,hora_inicio,hora_fin,valor,feriado_domingo,legajo) VALUES (?,?,?,?,?,?,?,?,?)");
+            ps.setString(1, nombre);
+            ps.setInt(2, cantidad);
+            ps.setString(3, fecha);
+            ps.setString(4, motivo);
+            ps.setString(5, horaInicio);
+            ps.setString(6, horaFinal);
+            ps.setInt(7, valor);
+            ps.setString(8, feriado);
+            ps.setString(9, legajo);
+
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro guardado");
+            limpiar();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }                    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCancelar1;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbxCantidad;
@@ -555,19 +637,18 @@ public class horas_extras extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxMotivo;
     private javax.swing.JComboBox<String> cbxValor;
     private com.toedter.calendar.JCalendar jCalendar1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
@@ -576,7 +657,6 @@ public class horas_extras extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtNo;
     private javax.swing.JTextField txtBuscador;
     private javax.swing.JTextField txtFecha;
-    private javax.swing.JLabel txtFondo;
     private javax.swing.JPanel txtId;
     private javax.swing.JTextField txtLegajo;
     // End of variables declaration//GEN-END:variables

@@ -1,32 +1,27 @@
-
 package inicio;
 
-
 import horas_extras.Liquidacion;
-import APP.empleados;
+import APP.empleado;
 import APP.productos.Producto;
 import EntregaProducto.entrega;
 import horas_extras.horas_extras;
 import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import sistema.loginAdmin;
 
-
-
-
-
 public class inicio extends javax.swing.JFrame {
 
-    
-public inicio() {
-    initComponents();
-    ImageIcon icon = new ImageIcon(getClass().getResource("../imagenes/Minimalist Modern Engineering Industry Logo.png"));
-    Image image = icon.getImage();
-    Image scaledImage = image.getScaledInstance(128, 128, java.awt.Image.SCALE_SMOOTH);
-    ImageIcon scaledIcon = new ImageIcon(scaledImage);
-    setIconImage(scaledIcon.getImage());
+    public inicio() {
+        initComponents();
 
-}
+    }
+    @Override
+    public Image getIconImage(){
+        
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("./imagenes/icon.jpeg"));
+        return retValue;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -38,6 +33,7 @@ public inicio() {
         btnConsultaHoras = new javax.swing.JButton();
         btnAdmin = new javax.swing.JButton();
         btnStockInventario = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         btnCargaEmpleado = new javax.swing.JButton();
         lbMATEO = new javax.swing.JLabel();
         lbFondo = new javax.swing.JLabel();
@@ -46,7 +42,7 @@ public inicio() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INICIO");
         setLocation(new java.awt.Point(200, 200));
-        setMaximumSize(new java.awt.Dimension(640, 330));
+        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(640, 330));
@@ -96,7 +92,7 @@ public inicio() {
                 btnAdminActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 180, 40));
+        jPanel1.add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 260, 180, 40));
 
         btnStockInventario.setBackground(new java.awt.Color(191, 245, 244));
         btnStockInventario.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
@@ -107,6 +103,16 @@ public inicio() {
             }
         });
         jPanel1.add(btnStockInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 180, 40));
+
+        btnExit.setBackground(new java.awt.Color(191, 245, 244));
+        btnExit.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        btnExit.setText("EXIT");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 180, 40));
 
         btnCargaEmpleado.setBackground(new java.awt.Color(191, 245, 244));
         btnCargaEmpleado.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
@@ -149,56 +155,68 @@ public inicio() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStockInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockInventarioActionPerformed
-          Producto produc = new Producto();
-               produc.setVisible(true);
-                hide();
-                          
+        Producto produc = new Producto();
+        produc.setVisible(true);
+        hide();
+
     }//GEN-LAST:event_btnStockInventarioActionPerformed
 
     private void btNEentregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNEentregaActionPerformed
-          entrega entregas = new entrega();
-           entregas.setVisible(true);
-                hide();
+        entrega entregas = new entrega();
+        entregas.setVisible(true);
+        hide();
     }//GEN-LAST:event_btNEentregaActionPerformed
 
     private void btnCargaEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargaEmpleadoActionPerformed
-    empleados irr = new empleados();
-                irr.setVisible(true);
-                hide();        // TODO add your handling code here:
+        empleado irr = new empleado();
+        irr.setVisible(true);
+        hide();        // TODO add your handling code here:
     }//GEN-LAST:event_btnCargaEmpleadoActionPerformed
 
     private void btnHorasExtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorasExtrasActionPerformed
-       horas_extras hs = new horas_extras();
-               hs.setVisible(true);
-               hide(); 
-                
+        horas_extras hs = new horas_extras();
+        hs.setVisible(true);
+        hide();
+
     }//GEN-LAST:event_btnHorasExtrasActionPerformed
 
     private void btnConsultaHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaHorasActionPerformed
-      Liquidacion liquidacion = new  Liquidacion();
-      liquidacion.setVisible(true);
-               hide(); 
+        Liquidacion liquidacion = new Liquidacion();
+        liquidacion.setVisible(true);
+        hide();
     }//GEN-LAST:event_btnConsultaHorasActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-      loginAdmin admin = new loginAdmin();
-      admin.setVisible(true);
-      hide();
+        loginAdmin admin = new loginAdmin();
+        admin.setVisible(true);
+        hide();
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnStockInventario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockInventario2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnStockInventario2ActionPerformed
 
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-   
-         java.awt.EventQueue.invokeLater(new Runnable() {
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 inicio frame = new inicio();
-                frame.setVisible(true);
+              ImageIcon icon = new ImageIcon("./imagenes/icon.jpeg");
+    Image image = icon.getImage();
+    Image resizedImage = image.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
+
+    // Establecer el ícono de la aplicación
+    frame.setIconImage(resizedImage);
+
+    frame.setVisible(true);
+               
             }
         });
         try {
@@ -217,8 +235,7 @@ public inicio() {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-      
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -226,6 +243,7 @@ public inicio() {
     private javax.swing.JButton btnAdmin;
     private javax.swing.JButton btnCargaEmpleado;
     private javax.swing.JButton btnConsultaHoras;
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnHorasExtras;
     private javax.swing.JButton btnStockInventario;
     private javax.swing.JButton btnStockInventario2;
@@ -235,13 +253,4 @@ public inicio() {
     private javax.swing.JLabel lbMATEO;
     // End of variables declaration//GEN-END:variables
 
-    private void setIconImage(ImageIcon imageIcon) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private static class Productos {
-
-        public Productos() {
-        }
-    }
 }
